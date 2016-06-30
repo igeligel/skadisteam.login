@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using skadi_steam_login.Helper;
 using skadi_steam_login.TwoFactor;
 using System;
 using System.Collections.Generic;

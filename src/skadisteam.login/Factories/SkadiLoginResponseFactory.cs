@@ -13,7 +13,7 @@ namespace skadi_steam_login.Factories
         public static SkadiLoginResponse Create(HttpResponseMessage response, CookieContainer cookieContainer)
         {
             SkadiLoginResponse skadiLoginResponse = new SkadiLoginResponse();
-            IEnumerable<Cookie> responseCookies = cookieContainer.GetCookies(Uris.SteamCommmunitySecureBase).Cast<Cookie>();
+            IEnumerable<Cookie> responseCookies = cookieContainer.GetCookies(Uris.SteamCommunitySecureBase).Cast<Cookie>();
             string responseUri = response.RequestMessage.RequestUri.ToString();
             var steam64Id = long.Parse(Regex.Split(Regex.Split(responseUri, "http://steamcommunity.com/profiles/")[1], "/home")[0]);
             skadiLoginResponse.SteamCommunityId = steam64Id;

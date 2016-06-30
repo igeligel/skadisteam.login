@@ -40,7 +40,7 @@ namespace skadi_steam_login
             GetRsaKeyResponse getRsaKeyResponse = null;
 
             var response = RequestFactory.Create(HttpMethod.POST,
-                Uris.SteamCommmunitySecureBase,
+                Uris.SteamCommunitySecureBase,
                 SteamCommunityEndpoints.GetRsaKey, Accept.All,
                 HttpHeaderValues.AcceptLanguageOne, false, true, true, true,
                 false, postContent, _cookieContainer);
@@ -61,7 +61,7 @@ namespace skadi_steam_login
                 TwoFactorCodeFactory.Create(sharedSecret));
 
             var response = RequestFactory.Create(HttpMethod.POST,
-                new Uri("https://steamcommunity.com"),
+                Uris.SteamCommunitySecureBase,
                 SteamCommunityEndpoints.DoLogin, Accept.All,
                 HttpHeaderValues.AcceptLanguageOne, false, true, true, true,
                 false, content, _cookieContainer);

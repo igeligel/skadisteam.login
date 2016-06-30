@@ -246,6 +246,8 @@ ModelManifest.xml
 
 # Ignore sub projects
 skadisteam.login.console
+skadisteam.login.console.sln
 
 # Ignore stackdumps
 *.stackdump
+

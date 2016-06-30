@@ -36,19 +36,9 @@ namespace skadi_steam_login
             return SetSession();
         }
 
-        private List<KeyValuePair<string, string>> CreateGetRsaKeyContent(string username)
+        private GetRsaKeyResponse GetRsaKey(string username)
         {
-            var content = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>(PostParameters.Username, username),
-                new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixTime().ToString())
-            };
-            return content;
-        }
-
-        public GetRsaKeyResponse GetRsaKey(string username)
-        {
-            var postContent = CreateGetRsaKeyContent(username);
+            var postContent = PostDataFactory.CreateGetRsaKeyData(username);
             GetRsaKeyResponse getRsaKeyResponse = null;
 
             var response = Request(HttpMethod.POST, Uris.SteamCommmunitySecureBase, SteamCommunityEndpoints.GetRsaKey, Accept.All, HttpHeaderValues.AcceptLanguageOne,
@@ -72,32 +62,12 @@ namespace skadi_steam_login
             var encodedPassword = rsa.Encrypt(bytePassword, false);
             return Convert.ToBase64String(encodedPassword);
         }
-
-        private List<KeyValuePair<string, string>> CreateDoLoginContent(string username, string encryptedPassword,
-            string rsaTimestamp, string twoFactorCode)
-        {
-            var content = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>(PostParameters.Username, username),
-                new KeyValuePair<string, string>(PostParameters.Password, encryptedPassword),
-                new KeyValuePair<string, string>(PostParameters.CaptchaGid, "-1"),
-                new KeyValuePair<string, string>(PostParameters.CaptchaText, ""),
-                new KeyValuePair<string, string>(PostParameters.RememberLogin, "true"),
-                new KeyValuePair<string, string>(PostParameters.LoginFriendlyName, "skadi-steam-login"),
-                new KeyValuePair<string, string>(PostParameters.EmailAuth, ""),
-                new KeyValuePair<string, string>(PostParameters.EmailSteamId, ""),
-                new KeyValuePair<string, string>(PostParameters.RsaTimestamp, Uri.EscapeDataString(rsaTimestamp)),
-                new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixTime().ToString()),
-                new KeyValuePair<string, string>(PostParameters.TwoFactorCode, twoFactorCode)
-            };
-            return content;
-        }
-
-        public DoLoginResponse DoLogin(GetRsaKeyResponse getRsaKeyResponse, string username, string password, string sharedSecret)
+        
+        private DoLoginResponse DoLogin(GetRsaKeyResponse getRsaKeyResponse, string username, string password, string sharedSecret)
         {
             DoLoginResponse doLoginResponse = null;
             var encryptedBase64Password = EncryptPassword(EncryptPasswordFactory.Create(getRsaKeyResponse, password));
-            var content = CreateDoLoginContent(username, encryptedBase64Password, getRsaKeyResponse.Timestamp, TwoFactorCodeFactory.Create(sharedSecret));
+            var content = PostDataFactory.CreateDoLoginData(username, encryptedBase64Password, getRsaKeyResponse.Timestamp, TwoFactorCodeFactory.Create(sharedSecret));
 
             var response = Request(HttpMethod.POST, new Uri("https://steamcommunity.com"), SteamCommunityEndpoints.DoLogin, Accept.All,
                 HttpHeaderValues.AcceptLanguageOne, false, true, true, true, false, content);
@@ -106,23 +76,10 @@ namespace skadi_steam_login
             doLoginResponse = JsonConvert.DeserializeObject<DoLoginResponse>(responseContent);
             return doLoginResponse;
         }
-
-        private List<KeyValuePair<string, string>> CreateTransferContent(DoLoginResponse doLoginResponse)
-        {
-            var content = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>(PostParameters.SteamId, doLoginResponse.TransferParameters.SteamId),
-                new KeyValuePair<string, string>(PostParameters.Token, doLoginResponse.TransferParameters.Token),
-                new KeyValuePair<string, string>(PostParameters.Auth, doLoginResponse.TransferParameters.Auth),
-                new KeyValuePair<string, string>(PostParameters.RememberLogin, doLoginResponse.TransferParameters.RememberLogin.ToString()),
-                new KeyValuePair<string, string>(PostParameters.TokenSecure, doLoginResponse.TransferParameters.TokenSecure),
-            };
-            return content;
-        }
-
+        
         private void Transfer(DoLoginResponse doLoginResponse)
         {
-            var content = CreateTransferContent(doLoginResponse);
+            var content = PostDataFactory.CreateTransferData(doLoginResponse);
             var response = Request(HttpMethod.POST, new Uri("https://help.steampowered.com"), "/login/transfer",
                 Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, true, true, false, true, content);
         }

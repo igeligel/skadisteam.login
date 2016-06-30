@@ -1,6 +1,6 @@
 using System;
 
-namespace skadi_steam_login.Extensions
+namespace skadisteam.login.Extensions
 {
     internal static class DateTimeExtensions
     {

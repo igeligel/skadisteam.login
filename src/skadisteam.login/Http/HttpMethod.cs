@@ -1,4 +1,4 @@
-namespace skadi_steam_login.Http
+namespace skadisteam.login.Http
 {
     public enum HttpMethod
     {

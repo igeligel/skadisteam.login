@@ -1,6 +1,6 @@
-using skadi_steam_login.TwoFactor;
+using skadisteam.login.TwoFactor;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class TwoFactorCodeFactory
     {

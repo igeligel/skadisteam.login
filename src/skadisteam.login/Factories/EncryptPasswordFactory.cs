@@ -1,11 +1,11 @@
-using skadi_steam_login.Extensions;
-using skadi_steam_login.Models;
-using skadi_steam_login.Models.Json;
+using skadisteam.login.Extensions;
+using skadisteam.login.Models;
+using skadisteam.login.Models.Json;
 using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class EncryptPasswordFactory
     {

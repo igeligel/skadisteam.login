@@ -1,10 +1,10 @@
-using skadi_steam_login.Constants;
-using skadi_steam_login.Extensions;
-using skadi_steam_login.Models.Json;
+using skadisteam.login.Constants;
+using skadisteam.login.Extensions;
+using skadisteam.login.Models.Json;
 using System;
 using System.Collections.Generic;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class PostDataFactory
     {

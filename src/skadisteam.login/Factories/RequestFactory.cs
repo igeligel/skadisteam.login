@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using skadi_steam_login.Constants;
-using skadi_steam_login.Http.Headers;
-using HttpMethod = skadi_steam_login.Http.HttpMethod;
+using skadisteam.login.Constants;
+using skadisteam.login.Http.Headers;
+using HttpMethod = skadisteam.login.Http.HttpMethod;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class RequestFactory
     {

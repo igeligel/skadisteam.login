@@ -1,8 +1,8 @@
 using System;
 using System.Net;
-using skadi_steam_login.Constants;
+using skadisteam.login.Constants;
 
-namespace skadi_steam_login.Extensions
+namespace skadisteam.login.Extensions
 {
     internal static class CookieContainerExtensions
     {

@@ -1,17 +1,14 @@
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
-using skadi_steam_login.Constants;
-using skadi_steam_login.Extensions;
-using skadi_steam_login.Http.Headers;
-using skadi_steam_login.Models;
-using HttpMethod = skadi_steam_login.Http.HttpMethod;
-using skadi_steam_login.Models.Json;
-using skadi_steam_login.Factories;
+using skadisteam.login.Constants;
+using skadisteam.login.Extensions;
+using skadisteam.login.Http.Headers;
+using skadisteam.login.Models;
+using skadisteam.login.Http;
+using skadisteam.login.Models.Json;
+using skadisteam.login.Factories;
 
-namespace skadi_steam_login
+namespace skadisteam.login
 {
     public class SkadiLogin
     {
@@ -76,14 +73,16 @@ namespace skadi_steam_login
         {
             var content = PostDataFactory.CreateTransferData(doLoginResponse);
             RequestFactory.Create(HttpMethod.POST,
-                Uris.HelpSteampoweredSecureBase, "/login/transfer",
+                Uris.HelpSteampoweredSecureBase,
+                HelpSteampoweredEndpoints.TransferLogin,
                 Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, true,
                 true, false, true, content, _cookieContainer);
         }
 
         private SkadiLoginResponse SetSession()
         {
-            var response = RequestFactory.Create(HttpMethod.GET, Uris.SteamCommunityBase, "/my/home",
+            var response = RequestFactory.Create(HttpMethod.GET,
+                Uris.SteamCommunityBase, SteamCommunityEndpoints.Home,
                 Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, false,
                 false, false, false, null, _cookieContainer);
             return SkadiLoginResponseFactory.Create(response, _cookieContainer);

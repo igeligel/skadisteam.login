@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class HttpParameterFactory
     {

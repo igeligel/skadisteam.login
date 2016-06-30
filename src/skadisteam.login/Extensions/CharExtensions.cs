@@ -1,4 +1,4 @@
-namespace skadi_steam_login.Extensions
+namespace skadisteam.login.Extensions
 {
     public static class CharExtensions
     {

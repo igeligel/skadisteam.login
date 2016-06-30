@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace skadi_steam_login.Models.Json
+namespace skadisteam.login.Models.Json
 {
     public class TransferParameters
     {

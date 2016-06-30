@@ -25,7 +25,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace skadi_steam_login.TwoFactor
+namespace skadisteam.login.TwoFactor
 {
     /// <summary>
     /// Class to enable two factor authorization for the login process on backpack.tf.

@@ -1,4 +1,4 @@
-namespace skadi_steam_login.Constants
+namespace skadisteam.login.Constants
 {
     internal class HttpHeaderValues
     {

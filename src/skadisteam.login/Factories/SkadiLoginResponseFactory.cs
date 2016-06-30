@@ -1,12 +1,12 @@
 using System.Net;
-using skadi_steam_login.Models;
+using skadisteam.login.Models;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
-using skadi_steam_login.Constants;
+using skadisteam.login.Constants;
 using System.Linq;
 using System.Net.Http;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class SkadiLoginResponseFactory
     {

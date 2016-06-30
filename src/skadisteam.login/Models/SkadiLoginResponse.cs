@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace skadi_steam_login.Models
+namespace skadisteam.login.Models
 {
     public class SkadiLoginResponse
     {

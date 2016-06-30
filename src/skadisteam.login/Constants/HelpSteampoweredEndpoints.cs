@@ -2,6 +2,6 @@ namespace skadisteam.login.Constants
 {
     internal class HelpSteampoweredEndpoints
     {
-        public const string TransferLogin = "/login/transfer";
+        internal const string TransferLogin = "/login/transfer";
     }
 }

@@ -1,15 +1,15 @@
 namespace skadisteam.login.Constants
 {
-    public class HttpHeaderKeys
+    internal class HttpHeaderKeys
     {
-        public const string Accept = "Accept";
-        public const string AcceptEncoding = "Accept-Encoding";
-        public const string AcceptLanguage = "Accept-Language";
-        public const string CacheControl = "Cache-Control";
-        public const string Origin = "Origin";
-        public const string Referer = "Referer";
-        public const string UpgradeInsecureRequests = "Upgrade-Insecure-Requests";
-        public const string UserAgent = "User-Agent";
-        public const string XRequestedWith = "X-Requested-With";
+        internal const string Accept = "Accept";
+        internal const string AcceptEncoding = "Accept-Encoding";
+        internal const string AcceptLanguage = "Accept-Language";
+        internal const string CacheControl = "Cache-Control";
+        internal const string Origin = "Origin";
+        internal const string Referer = "Referer";
+        internal const string UpgradeInsecureRequests = "Upgrade-Insecure-Requests";
+        internal const string UserAgent = "User-Agent";
+        internal const string XRequestedWith = "X-Requested-With";
     }
 }

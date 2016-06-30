@@ -2,20 +2,20 @@ namespace skadisteam.login.Constants
 {
     internal class PostParameters
     {
-        public const string Auth = "auth";
-        public const string CaptchaGid = "captchagid";
-        public const string CaptchaText = "captcha_text";
-        public const string DoNotCache = "donotcache";
-        public const string EmailAuth = "emailauth";
-        public const string EmailSteamId = "emailsteamid";
-        public const string LoginFriendlyName = "loginfriendlyname";
-        public const string Password = "password";
-        public const string RememberLogin = "remember_login";
-        public const string RsaTimestamp = "rsatimestamp";
-        public const string SteamId = "steamid";
-        public const string Token = "token";
-        public const string TokenSecure = "token_secure";
-        public const string TwoFactorCode = "twofactorcode";
-        public const string Username = "username";
+        internal const string Auth = "auth";
+        internal const string CaptchaGid = "captchagid";
+        internal const string CaptchaText = "captcha_text";
+        internal const string DoNotCache = "donotcache";
+        internal const string EmailAuth = "emailauth";
+        internal const string EmailSteamId = "emailsteamid";
+        internal const string LoginFriendlyName = "loginfriendlyname";
+        internal const string Password = "password";
+        internal const string RememberLogin = "remember_login";
+        internal const string RsaTimestamp = "rsatimestamp";
+        internal const string SteamId = "steamid";
+        internal const string Token = "token";
+        internal const string TokenSecure = "token_secure";
+        internal const string TwoFactorCode = "twofactorcode";
+        internal const string Username = "username";
     }
 }

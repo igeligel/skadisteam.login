@@ -1,11 +1,8 @@
 using System;
 
-namespace skadi_steam_login.Helper
+namespace skadi_steam_login.Extensions
 {
-    /// <summary>
-    /// Class to help with chars.
-    /// </summary>
-    public static class CharHelper
+    public static class StringExtensions
     {
         /// <summary>
         /// Hex to Byte method.
@@ -26,24 +23,9 @@ namespace skadi_steam_login.Helper
 
             for (var i = 0; i < (l >> 1); ++i)
             {
-                arr[i] = (byte)((GetHexVal(hex[i << 1]) << 4) + (GetHexVal(hex[(i << 1) + 1])));
+                arr[i] = (byte)(((hex[i << 1].GetHexVal()) << 4) + ((hex[(i << 1) + 1]).GetHexVal()));
             }
             return arr;
-        }
-
-        /// <summary>
-        /// Get the Hex Value out of char.
-        /// </summary>
-        /// <param name="hex">
-        /// Char to input.
-        /// </param>
-        /// <returns>
-        /// An int.
-        /// </returns>
-        private static int GetHexVal(char hex)
-        {
-            var val = (int)hex;
-            return val - (val < 58 ? 48 : 55);
         }
     }
 }

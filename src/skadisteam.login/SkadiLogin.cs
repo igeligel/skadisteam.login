@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using skadi_steam_login.TwoFactor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,37 +78,34 @@ namespace skadi_steam_login
             return Convert.ToBase64String(encodedPassword);
         }
 
-        public DoLoginResponse DoLogin(GetRsaKeyResponse getRsaKeyResponse, string username, string password, string sharedSecret)
+        private List<KeyValuePair<string, string>> CreateDoLoginContent(string username, string encryptedPassword,
+            string rsaTimestamp, string twoFactorCode)
         {
-            DoLoginResponse doLoginResponse = null;
-            var encryptedBase64Password = EncryptPassword(EncryptPasswordFactory.Create(getRsaKeyResponse, password));
-
-
-            var rsaTimeStamp = Uri.EscapeDataString(getRsaKeyResponse.Timestamp.ToString());
-            var twoFactorGenerator = new SteamTwoFactorGenerator
-            {
-                SharedSecret = sharedSecret
-            };
-            var twoFactorCode = twoFactorGenerator.GenerateSteamGuardCodeForTime();
-
             var content = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>(PostParameters.Username, username),
-                new KeyValuePair<string, string>(PostParameters.Password, encryptedBase64Password),
+                new KeyValuePair<string, string>(PostParameters.Password, encryptedPassword),
                 new KeyValuePair<string, string>(PostParameters.CaptchaGid, "-1"),
                 new KeyValuePair<string, string>(PostParameters.CaptchaText, ""),
                 new KeyValuePair<string, string>(PostParameters.RememberLogin, "true"),
                 new KeyValuePair<string, string>(PostParameters.LoginFriendlyName, "skadi-steam-login"),
                 new KeyValuePair<string, string>(PostParameters.EmailAuth, ""),
                 new KeyValuePair<string, string>(PostParameters.EmailSteamId, ""),
-                new KeyValuePair<string, string>(PostParameters.RsaTimestamp, getRsaKeyResponse.Timestamp),
+                new KeyValuePair<string, string>(PostParameters.RsaTimestamp, Uri.EscapeDataString(rsaTimestamp)),
                 new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixTime().ToString()),
                 new KeyValuePair<string, string>(PostParameters.TwoFactorCode, twoFactorCode)
             };
+            return content;
+        }
+
+        public DoLoginResponse DoLogin(GetRsaKeyResponse getRsaKeyResponse, string username, string password, string sharedSecret)
+        {
+            DoLoginResponse doLoginResponse = null;
+            var encryptedBase64Password = EncryptPassword(EncryptPasswordFactory.Create(getRsaKeyResponse, password));
+            var content = CreateDoLoginContent(username, encryptedBase64Password, getRsaKeyResponse.Timestamp, TwoFactorCodeFactory.Create(sharedSecret));
 
             var response = Request(HttpMethod.POST, new Uri("https://steamcommunity.com"), SteamCommunityEndpoints.DoLogin, Accept.All,
-                HttpHeaderValues.AcceptLanguageOne,
-                false, true, true, true, false, content);
+                HttpHeaderValues.AcceptLanguageOne, false, true, true, true, false, content);
 
             string responseContent = response.Content.ReadAsStringAsync().Result;
             doLoginResponse = JsonConvert.DeserializeObject<DoLoginResponse>(responseContent);

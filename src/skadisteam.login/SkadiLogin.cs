@@ -15,6 +15,7 @@ using skadi_steam_login.Http.Headers;
 using skadi_steam_login.Models;
 using HttpMethod = skadi_steam_login.Http.HttpMethod;
 using skadi_steam_login.Models.Json;
+using skadi_steam_login.Factories;
 
 namespace skadi_steam_login
 {
@@ -64,24 +65,28 @@ namespace skadi_steam_login
             return getRsaKeyResponse;
         }
 
-        public DoLoginResponse DoLogin(GetRsaKeyResponse getRsaKeyResponse, string username, string password, string sharedSecret)
+        private string EncryptPassword(EncryptPasswordModel encryptPasswordModel)
         {
-            DoLoginResponse doLoginResponse = null;
-
             var rsa = new RSACryptoServiceProvider();
 
             var rsaParameters = new RSAParameters
             {
-                Exponent = getRsaKeyResponse.PublicKeyExp.HexToByte(),
-                Modulus = getRsaKeyResponse.PublicKeyMod.HexToByte()
+                Exponent = encryptPasswordModel.PublicKeyExp.HexToByte(),
+                Modulus = encryptPasswordModel.PublicKeyMod.HexToByte()
             };
             rsa.ImportParameters(rsaParameters);
-            var bytePassword = Encoding.ASCII.GetBytes(password);
+            var bytePassword = Encoding.ASCII.GetBytes(encryptPasswordModel.Password);
             var encodedPassword = rsa.Encrypt(bytePassword, false);
-            var encryptedBase64Password = Convert.ToBase64String(encodedPassword);
-            var rsaTimeStamp = Uri.EscapeDataString(getRsaKeyResponse.Timestamp.ToString());
+            return Convert.ToBase64String(encodedPassword);
+        }
 
-            
+        public DoLoginResponse DoLogin(GetRsaKeyResponse getRsaKeyResponse, string username, string password, string sharedSecret)
+        {
+            DoLoginResponse doLoginResponse = null;
+            var encryptedBase64Password = EncryptPassword(EncryptPasswordFactory.Create(getRsaKeyResponse, password));
+
+
+            var rsaTimeStamp = Uri.EscapeDataString(getRsaKeyResponse.Timestamp.ToString());
             var twoFactorGenerator = new SteamTwoFactorGenerator
             {
                 SharedSecret = sharedSecret

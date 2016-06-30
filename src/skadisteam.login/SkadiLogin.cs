@@ -1,12 +1,10 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Text.RegularExpressions;
 using skadi_steam_login.Constants;
 using skadi_steam_login.Extensions;
 using skadi_steam_login.Http.Headers;
@@ -35,10 +33,7 @@ namespace skadi_steam_login
             var rsaKey = GetRsaKey(skadiLoginData.Username);
             var doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username, skadiLoginData.Password, skadiLoginData.SharedSecret);
             Transfer(doLoginResponse);
-            var skadiLoginResponse = SetSession();
-
-            skadiLoginResponse.SkadiLoginCookies = _cookieContainer;
-            return skadiLoginResponse;
+            return SetSession();
         }
 
         private List<KeyValuePair<string, string>> CreateGetRsaKeyContent(string username)
@@ -112,7 +107,7 @@ namespace skadi_steam_login
             return doLoginResponse;
         }
 
-        public void Transfer(DoLoginResponse doLoginResponse)
+        private List<KeyValuePair<string, string>> CreateTransferContent(DoLoginResponse doLoginResponse)
         {
             var content = new List<KeyValuePair<string, string>>
             {
@@ -122,29 +117,22 @@ namespace skadi_steam_login
                 new KeyValuePair<string, string>(PostParameters.RememberLogin, doLoginResponse.TransferParameters.RememberLogin.ToString()),
                 new KeyValuePair<string, string>(PostParameters.TokenSecure, doLoginResponse.TransferParameters.TokenSecure),
             };
-            var response = Request(HttpMethod.POST, new Uri("https://help.steampowered.com"), "/login/transfer",
-                Accept.Html,
-                HttpHeaderValues.AcceptLanguageTwo, true, true, true, false, true, content);
+            return content;
         }
 
-        public SkadiLoginResponse SetSession()
+        private void Transfer(DoLoginResponse doLoginResponse)
         {
-            var skadiLoginResponse = new SkadiLoginResponse();
+            var content = CreateTransferContent(doLoginResponse);
+            var response = Request(HttpMethod.POST, new Uri("https://help.steampowered.com"), "/login/transfer",
+                Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, true, true, false, true, content);
+        }
+
+        private SkadiLoginResponse SetSession()
+        {
             var steamCommunityUri = new Uri("http://steamcommunity.com");
             var response = Request(HttpMethod.GET, steamCommunityUri, "/my/home",
                 Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, false, false, false, false, null);
-            response.EnsureSuccessStatusCode();
-            IEnumerable<Cookie> responseCookies = _cookieContainer.GetCookies(steamCommunityUri).Cast<Cookie>();
-            string responseUri = response.RequestMessage.RequestUri.ToString();
-            var steam64Id = long.Parse(Regex.Split(Regex.Split(responseUri, "http://steamcommunity.com/profiles/")[1], "/home")[0]);
-            skadiLoginResponse.SteamCommunityId = steam64Id;
-
-            skadiLoginResponse.SteamCountry = responseCookies.FirstOrDefault(e => e.Name == "steamCountry").Value;
-            skadiLoginResponse.SteamLogin = responseCookies.FirstOrDefault(e => e.Name == "steamLogin").Value;
-            skadiLoginResponse.SteamRememberLogin = responseCookies.FirstOrDefault(e => e.Name == "steamRememberLogin").Value;
-            skadiLoginResponse.SessionId = responseCookies.FirstOrDefault(e => e.Name == "sessionid").Value;
-            skadiLoginResponse.SteamLanguage = responseCookies.FirstOrDefault(e => e.Name == "Steam_Language").Value;
-            return skadiLoginResponse;
+            return SkadiLoginResponseFactory.Create(response, _cookieContainer);
         }
 
         public HttpResponseMessage Request(HttpMethod method, Uri uri, string path, Accept acceptHeader, string acceptLanguage, bool upgradeInsecureRequests,

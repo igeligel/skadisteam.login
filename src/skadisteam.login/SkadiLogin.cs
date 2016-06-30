@@ -57,7 +57,7 @@ namespace skadi_steam_login
             var postContent = CreateGetRsaKeyContent(username);
             GetRsaKeyResponse getRsaKeyResponse = null;
 
-            var response = Request(HttpMethod.POST, Uris.SteamCommmunitySecureBase, SteamCommunityEndpoints.GetRsaKey, Accept.All, "en-US;q=0.6,en;q=0.4,it;q=0.2",
+            var response = Request(HttpMethod.POST, Uris.SteamCommmunitySecureBase, SteamCommunityEndpoints.GetRsaKey, Accept.All, HttpHeaderValues.AcceptLanguageOne,
                 false, true, true, true, false, postContent);
             string responseContent = response.Content.ReadAsStringAsync().Result;
             getRsaKeyResponse = JsonConvert.DeserializeObject<GetRsaKeyResponse>(responseContent);
@@ -104,7 +104,7 @@ namespace skadi_steam_login
             };
 
             var response = Request(HttpMethod.POST, new Uri("https://steamcommunity.com"), SteamCommunityEndpoints.DoLogin, Accept.All,
-                "en-US;q=0.6,en;q=0.4,it;q=0.2",
+                HttpHeaderValues.AcceptLanguageOne,
                 false, true, true, true, false, content);
 
             string responseContent = response.Content.ReadAsStringAsync().Result;
@@ -124,7 +124,7 @@ namespace skadi_steam_login
             };
             var response = Request(HttpMethod.POST, new Uri("https://help.steampowered.com"), "/login/transfer",
                 Accept.Html,
-                "en-US,en;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2", true, true, true, false, true, content);
+                HttpHeaderValues.AcceptLanguageTwo, true, true, true, false, true, content);
         }
 
         public SkadiLoginResponse SetSession()
@@ -132,7 +132,7 @@ namespace skadi_steam_login
             var skadiLoginResponse = new SkadiLoginResponse();
             var steamCommunityUri = new Uri("http://steamcommunity.com");
             var response = Request(HttpMethod.GET, steamCommunityUri, "/my/home",
-                Accept.Html, "en-US,en;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2", true, false, false, false, false, null);
+                Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, false, false, false, false, null);
             response.EnsureSuccessStatusCode();
             IEnumerable<Cookie> responseCookies = _cookieContainer.GetCookies(steamCommunityUri).Cast<Cookie>();
             string responseUri = response.RequestMessage.RequestUri.ToString();

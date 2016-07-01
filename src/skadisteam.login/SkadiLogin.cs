@@ -1,7 +1,5 @@
 using Newtonsoft.Json;
-using System.Net;
 using skadisteam.login.Constants;
-using skadisteam.login.Extensions;
 using skadisteam.login.Http.Headers;
 using skadisteam.login.Models;
 using skadisteam.login.Http;
@@ -12,18 +10,15 @@ namespace skadisteam.login
 {
     public class SkadiLogin
     {
-        private CookieContainer _cookieContainer;
+        private RequestFactory _requestFactory;
 
         public SkadiLogin()
         {
-            _cookieContainer = new CookieContainer(); 
+            _requestFactory = new RequestFactory();
         }
         
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
         {
-            _cookieContainer = new CookieContainer();
-            _cookieContainer.AddEnglishSteamLanguage();
-
             var rsaKey = GetRsaKey(skadiLoginData.Username);
             var doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
                 skadiLoginData.Password, skadiLoginData.SharedSecret);
@@ -36,11 +31,11 @@ namespace skadisteam.login
             var postContent = PostDataFactory.CreateGetRsaKeyData(username);
             GetRsaKeyResponse getRsaKeyResponse = null;
 
-            var response = RequestFactory.Create(HttpMethod.POST,
+            var response = _requestFactory.Create(HttpMethod.POST,
                 Uris.SteamCommunitySecureBase,
                 SteamCommunityEndpoints.GetRsaKey, Accept.All,
                 HttpHeaderValues.AcceptLanguageOne, false, true, true, true,
-                false, postContent, _cookieContainer);
+                false, postContent);
             string responseContent = response.Content.ReadAsStringAsync().Result;
             getRsaKeyResponse =
                 JsonConvert.DeserializeObject<GetRsaKeyResponse>(responseContent);
@@ -57,11 +52,11 @@ namespace skadisteam.login
                 encryptedPassword, getRsaKeyResponse.Timestamp,
                 TwoFactorCodeFactory.Create(sharedSecret));
 
-            var response = RequestFactory.Create(HttpMethod.POST,
+            var response = _requestFactory.Create(HttpMethod.POST,
                 Uris.SteamCommunitySecureBase,
                 SteamCommunityEndpoints.DoLogin, Accept.All,
                 HttpHeaderValues.AcceptLanguageOne, false, true, true, true,
-                false, content, _cookieContainer);
+                false, content);
 
             string responseContent = response.Content.ReadAsStringAsync().Result;
             doLoginResponse =
@@ -72,20 +67,20 @@ namespace skadisteam.login
         private void Transfer(DoLoginResponse doLoginResponse)
         {
             var content = PostDataFactory.CreateTransferData(doLoginResponse);
-            RequestFactory.Create(HttpMethod.POST,
+            _requestFactory.Create(HttpMethod.POST,
                 Uris.HelpSteampoweredSecureBase,
                 HelpSteampoweredEndpoints.TransferLogin,
                 Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, true,
-                true, false, true, content, _cookieContainer);
+                true, false, true, content);
         }
 
         private SkadiLoginResponse SetSession()
         {
-            var response = RequestFactory.Create(HttpMethod.GET,
+            var response = _requestFactory.Create(HttpMethod.GET,
                 Uris.SteamCommunityBase, SteamCommunityEndpoints.Home,
                 Accept.Html, HttpHeaderValues.AcceptLanguageTwo, true, false,
-                false, false, false, null, _cookieContainer);
-            return SkadiLoginResponseFactory.Create(response, _cookieContainer);
+                false, false, false, null);
+            return SkadiLoginResponseFactory.Create(response, _requestFactory.GetCookieContainer());
         }
     }
 }

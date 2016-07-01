@@ -5,22 +5,29 @@ using System.Net.Http;
 using skadisteam.login.Constants;
 using skadisteam.login.Http.Headers;
 using HttpMethod = skadisteam.login.Http.HttpMethod;
+using skadisteam.login.Extensions;
 
 namespace skadisteam.login.Factories
 {
-    public static class RequestFactory
+    public class RequestFactory
     {
-        public static HttpResponseMessage Create(HttpMethod method, Uri uri,
+        private CookieContainer _cookieContainer;
+        public RequestFactory()
+        {
+            _cookieContainer = new CookieContainer();
+            _cookieContainer.AddEnglishSteamLanguage();
+        }
+
+        public HttpResponseMessage Create(HttpMethod method, Uri uri,
             string path, Accept acceptHeader, string acceptLanguage,
             bool upgradeInsecureRequests, bool steamCommunityOriginSet,
             bool steamCommunityRefererSet, bool isXmlHttpRequest,
             bool cacheControlSet,
-            IEnumerable<KeyValuePair<string, string>> postContent,
-            CookieContainer cookieContainer)
+            IEnumerable<KeyValuePair<string, string>> postContent)
         {
             HttpResponseMessage response = null;
             var handler = new HttpClientHandler();
-            handler.CookieContainer = cookieContainer;
+            handler.CookieContainer = _cookieContainer;
             handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             using (var client = new HttpClient(handler))
             {
@@ -76,6 +83,11 @@ namespace skadisteam.login.Factories
 
             }
             return response;
+        }
+
+        internal CookieContainer GetCookieContainer()
+        {
+            return _cookieContainer;
         }
     }
 }

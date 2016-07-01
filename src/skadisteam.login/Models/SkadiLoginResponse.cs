@@ -1,4 +1,5 @@
 using System.Net;
+using skadi_steam_login.Models;
 
 namespace skadisteam.login.Models
 {
@@ -11,5 +12,6 @@ namespace skadisteam.login.Models
         public string SteamLanguage { get; set; }
         public long SteamCommunityId { get; set; }
         public CookieContainer SkadiLoginCookies { get; set; }
+        public SkadiLoginError SkadiLoginError { get; set; }
     }
 }

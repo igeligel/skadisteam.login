@@ -5,6 +5,8 @@ using skadisteam.login.Models;
 using skadisteam.login.Http;
 using skadisteam.login.Models.Json;
 using skadisteam.login.Factories;
+using skadi_steam_login.Validators;
+using skadi_steam_login.Models;
 
 namespace skadisteam.login
 {
@@ -22,6 +24,40 @@ namespace skadisteam.login
             var rsaKey = GetRsaKey(skadiLoginData.Username);
             var doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
                 skadiLoginData.Password, skadiLoginData.SharedSecret);
+
+            // Validate Response.
+            if (!DoLoginResponseValidator.IsValid(doLoginResponse))
+            {
+                SkadiLoginResponse skadiLoginResponse = new SkadiLoginResponse();
+                SkadiLoginError skadiLoginError = new SkadiLoginError();
+                // ERROR HANDLING AND RETURN OR RECURSIVE
+                if (doLoginResponse.CaptchaNeeded)
+                {
+                    skadiLoginError.CaptchaNeeded =
+                        doLoginResponse.CaptchaNeeded;
+                    skadiLoginError.CaptchaGid = doLoginResponse.CaptchaGid;
+                    skadiLoginError.Message = doLoginResponse.Message;
+                    skadiLoginError.Type = ErrorType.CaptchaNeeded;
+                }
+                else if (doLoginResponse.RequiresTwoFactor)
+                {
+                    skadiLoginError.CaptchaNeeded =
+                        doLoginResponse.CaptchaNeeded;
+                    skadiLoginError.CaptchaGid = doLoginResponse.CaptchaGid;
+                    skadiLoginError.Message = doLoginResponse.Message;
+                    skadiLoginError.Type = ErrorType.TwoFactor;
+                }
+                else if (doLoginResponse.Message == "Incorrect login.")
+                {
+                    skadiLoginError.CaptchaNeeded =
+                        doLoginResponse.CaptchaNeeded;
+                    skadiLoginError.CaptchaGid = doLoginResponse.CaptchaGid;
+                    skadiLoginError.Message = doLoginResponse.Message;
+                    skadiLoginError.Type = ErrorType.IncorrectLogin;
+                }
+                skadiLoginResponse.SkadiLoginError = skadiLoginError;
+                return skadiLoginResponse;
+            }
             Transfer(doLoginResponse);
             return SetSession();
         }

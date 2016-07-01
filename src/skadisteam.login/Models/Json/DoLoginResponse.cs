@@ -15,5 +15,13 @@ namespace skadisteam.login.Models.Json
         public List<string> TransferUrls { get; set; }
         [JsonProperty(PropertyName = "transfer_parameters")]
         public TransferParameters TransferParameters { get; set; }
+        [JsonProperty(PropertyName = "clear_password_field")]
+        public bool ClearPasswordField { get; set; }
+        [JsonProperty(PropertyName = "captcha_needed")]
+        public bool CaptchaNeeded { get; set; }
+        [JsonProperty(PropertyName = "captcha_gid")]
+        public long CaptchaGid { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
     }
 }

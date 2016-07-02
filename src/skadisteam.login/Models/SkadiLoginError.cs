@@ -1,6 +1,6 @@
 using skadisteam.login.Models.Json;
 
-namespace skadi_steam_login.Models
+namespace skadisteam.login.Models
 {
     public class SkadiLoginError
     {

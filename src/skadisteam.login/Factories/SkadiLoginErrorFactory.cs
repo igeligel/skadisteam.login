@@ -1,7 +1,7 @@
-using skadi_steam_login.Models;
+using skadisteam.login.Models;
 using skadisteam.login.Models.Json;
 
-namespace skadi_steam_login.Factories
+namespace skadisteam.login.Factories
 {
     public static class SkadiLoginErrorFactory
     {

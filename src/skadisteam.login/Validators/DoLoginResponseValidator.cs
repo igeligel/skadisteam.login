@@ -1,7 +1,7 @@
 using skadisteam.login.Models.Json;
-using skadi_steam_login.Models;
+using skadisteam.login.Models;
 
-namespace skadi_steam_login.Validators
+namespace skadisteam.login.Validators
 {
     public static class DoLoginResponseValidator
     {

@@ -1,5 +1,5 @@
 using System.Net;
-using skadi_steam_login.Models;
+using skadisteam.login.Models;
 
 namespace skadisteam.login.Models
 {

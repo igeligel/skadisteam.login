@@ -3,6 +3,12 @@
 A library to login into [steamcommunity.com](http://steamcommunity.com/) via a .net core wrapper.
 This will not need an api key because it is using the methods which steam is providing via the web.
 
+# TODO's
+
+| Issue         | Description                                    |
+| ------------- | ---------------------------------------------- |
+| #1            | Add time aligner to two factor code generator. |
+
 # Dependencies
 
 - Newtonsoft.Json 9.0.1
@@ -95,7 +101,7 @@ The object will have the following properties:
 ## Commits
 For commits i am using [this style](https://github.com/igeligel/contributing-template/blob/master/commits.md). You should also use this style when you are creating pull requests.
 
-## C#
+## Csharp
 For general language advice i suggest the [official style guideline](https://msdn.microsoft.com/en-us/library/ff926074.aspx). Written down in markdown syntax [here](https://github.com/igeligel/contributing-template/blob/master/code-style/csharp.md).
 
 # Authors

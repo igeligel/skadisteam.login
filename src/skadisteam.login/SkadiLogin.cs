@@ -57,9 +57,18 @@ namespace skadisteam.login
                 try
                 {
                     rsaKey = GetRsaKey(skadiLoginData.Username);
-                    if (rsaKey == null) continue;
                     doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
                         skadiLoginData.Password, skadiLoginData.SharedSecret);
+                    if (!DoLoginResponseValidator.IsValid(doLoginResponse))
+                    {
+                        if (doLoginResponse.CaptchaNeeded)
+                        {
+                            // TODO: Get exact time for cooldown of captcha!
+                            Task.Delay(TimeSpan.FromMinutes(25));
+                        }
+                        rsaKey = null;
+                        doLoginResponse = null;
+                    }
                 }
                 catch (Exception)
                 {
@@ -67,9 +76,39 @@ namespace skadisteam.login
                         TimeSpan.FromSeconds(
                             _skadiLoginConfiguration.WaitTimeEachError)).Wait();
                 }
-            }
 
-            return null;
+            }
+            
+            bool errorInTransfer = false;
+            do
+            {
+                try
+                {
+                    Transfer(doLoginResponse);
+                }
+                catch (Exception)
+                {
+                    errorInTransfer = true;
+                    Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                }
+                
+            } while (errorInTransfer);
+
+            SkadiLoginResponse skadiLoginResponse = null;
+            do
+            {
+                try
+                {
+                    skadiLoginResponse = SetSession();
+                }
+                catch (Exception)
+                {
+                    Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                }
+
+            } while (skadiLoginResponse == null);
+            
+            return skadiLoginResponse;
         }
 
         private GetRsaKeyResponse GetRsaKey(string username)

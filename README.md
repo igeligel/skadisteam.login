@@ -5,9 +5,11 @@ This will not need an api key because it is using the methods which steam is pro
 
 # TODO's
 
-| Issue         | Description                                    |
-| ------------- | ---------------------------------------------- |
-| #1            | Add time aligner to two factor code generator. |
+| Issue                                                          | Description                                    |
+| -------------------------------------------------------------- | ---------------------------------------------- |
+| [#1](https://github.com/igeligel/skadisteam.login/issues/1)    | Add time aligner to two factor code generator. |
+| [#2](https://github.com/igeligel/skadisteam.login/issues/2)    | Add continuous integration.                    |
+| [#3](https://github.com/igeligel/skadisteam.login/issues/3)    | Add unit and integration tests.                |
 
 # Dependencies
 

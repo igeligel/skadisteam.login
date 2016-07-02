@@ -13,7 +13,9 @@ This will not need an api key because it is using the methods which steam is pro
 
 # Dependencies
 
+- "NETStandard.Library": "1.6.0"
 - Newtonsoft.Json 9.0.1
+- System.Security.Cryptography.Csp
 
 # Installation
 
@@ -50,7 +52,7 @@ This will not need an api key because it is using the methods which steam is pro
         "type": "platform",
         "version": "1.0.0"
       },
-      "skadisteam.login": "1.0.0-*"
+      "skadisteam.login": "1.0.0-beta"
     }
   }
   ``` 

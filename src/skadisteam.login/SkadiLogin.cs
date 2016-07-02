@@ -23,14 +23,15 @@ namespace skadisteam.login
 
         public SkadiLogin(SkadiLoginConfiguration skadiLoginConfiguration)
         {
+            _requestFactory = new RequestFactory();
             _skadiLoginConfiguration = skadiLoginConfiguration;
         }
         
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
         {
-            if (!_skadiLoginConfiguration.StopOnError)
+            if (_skadiLoginConfiguration != null && !_skadiLoginConfiguration.StopOnError)
             {
-                ExecuteEndless(skadiLoginData);
+                return ExecuteUntilLogin(skadiLoginData);
             }
             var rsaKey = GetRsaKey(skadiLoginData.Username);
             var doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
@@ -47,12 +48,13 @@ namespace skadisteam.login
             return SetSession();
         }
 
-        private SkadiLoginResponse ExecuteEndless(SkadiLoginData skadiLoginData)
+        private SkadiLoginResponse ExecuteUntilLogin(SkadiLoginData skadiLoginData)
         {
-            GetRsaKeyResponse rsaKey = null;
-            DoLoginResponse doLoginResponse = null;
+            GetRsaKeyResponse rsaKey = new GetRsaKeyResponse();
+            DoLoginResponse doLoginResponse = new DoLoginResponse();
+            var doLoginSuccessful = false;
 
-            while (rsaKey == null || doLoginResponse == null)
+            do
             {
                 try
                 {
@@ -69,6 +71,10 @@ namespace skadisteam.login
                         rsaKey = null;
                         doLoginResponse = null;
                     }
+                    else
+                    {
+                        doLoginSuccessful = true;
+                    }
                 }
                 catch (Exception)
                 {
@@ -76,8 +82,8 @@ namespace skadisteam.login
                         TimeSpan.FromSeconds(
                             _skadiLoginConfiguration.WaitTimeEachError)).Wait();
                 }
-
             }
+            while (doLoginSuccessful == false);
             
             bool errorInTransfer = false;
             do

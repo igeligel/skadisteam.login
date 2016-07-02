@@ -5,18 +5,23 @@ using skadisteam.login.Models;
 using skadisteam.login.Http;
 using skadisteam.login.Models.Json;
 using skadisteam.login.Factories;
-using skadi_steam_login.Validators;
-using skadi_steam_login.Models;
+using skadisteam.login.Validators;
 
 namespace skadisteam.login
 {
     public class SkadiLogin
     {
         private RequestFactory _requestFactory;
+        private SkadiConfiguration _skadiConfiguration;
 
         public SkadiLogin()
         {
             _requestFactory = new RequestFactory();
+        }
+
+        public SkadiLogin(SkadiConfiguration skadiConfiguration)
+        {
+            _skadiConfiguration = skadiConfiguration;
         }
         
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
@@ -24,38 +29,12 @@ namespace skadisteam.login
             var rsaKey = GetRsaKey(skadiLoginData.Username);
             var doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
                 skadiLoginData.Password, skadiLoginData.SharedSecret);
-
-            // Validate Response.
+            
             if (!DoLoginResponseValidator.IsValid(doLoginResponse))
             {
                 SkadiLoginResponse skadiLoginResponse = new SkadiLoginResponse();
-                SkadiLoginError skadiLoginError = new SkadiLoginError();
-                // ERROR HANDLING AND RETURN OR RECURSIVE
-                if (doLoginResponse.CaptchaNeeded)
-                {
-                    skadiLoginError.CaptchaNeeded =
-                        doLoginResponse.CaptchaNeeded;
-                    skadiLoginError.CaptchaGid = doLoginResponse.CaptchaGid;
-                    skadiLoginError.Message = doLoginResponse.Message;
-                    skadiLoginError.Type = ErrorType.CaptchaNeeded;
-                }
-                else if (doLoginResponse.RequiresTwoFactor)
-                {
-                    skadiLoginError.CaptchaNeeded =
-                        doLoginResponse.CaptchaNeeded;
-                    skadiLoginError.CaptchaGid = doLoginResponse.CaptchaGid;
-                    skadiLoginError.Message = doLoginResponse.Message;
-                    skadiLoginError.Type = ErrorType.TwoFactor;
-                }
-                else if (doLoginResponse.Message == "Incorrect login.")
-                {
-                    skadiLoginError.CaptchaNeeded =
-                        doLoginResponse.CaptchaNeeded;
-                    skadiLoginError.CaptchaGid = doLoginResponse.CaptchaGid;
-                    skadiLoginError.Message = doLoginResponse.Message;
-                    skadiLoginError.Type = ErrorType.IncorrectLogin;
-                }
-                skadiLoginResponse.SkadiLoginError = skadiLoginError;
+                skadiLoginResponse.SkadiLoginError =
+                    SkadiLoginErrorFactory.Create(doLoginResponse);
                 return skadiLoginResponse;
             }
             Transfer(doLoginResponse);
@@ -84,6 +63,7 @@ namespace skadisteam.login
             DoLoginResponse doLoginResponse = null;
             var encryptedPassword =
                 EncryptPasswordFactory.Create(getRsaKeyResponse, password);
+
             var content = PostDataFactory.CreateDoLoginData(username,
                 encryptedPassword, getRsaKeyResponse.Timestamp,
                 TwoFactorCodeFactory.Create(sharedSecret));

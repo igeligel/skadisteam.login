@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using skadisteam.login.Constants;
 using skadisteam.login.Http.Headers;
@@ -26,6 +28,10 @@ namespace skadisteam.login
         
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
         {
+            if (!_skadiConfiguration.StopOnError)
+            {
+                ExecuteEndless(skadiLoginData);
+            }
             var rsaKey = GetRsaKey(skadiLoginData.Username);
             var doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
                 skadiLoginData.Password, skadiLoginData.SharedSecret);
@@ -39,6 +45,31 @@ namespace skadisteam.login
             }
             Transfer(doLoginResponse);
             return SetSession();
+        }
+
+        private SkadiLoginResponse ExecuteEndless(SkadiLoginData skadiLoginData)
+        {
+            GetRsaKeyResponse rsaKey = null;
+            DoLoginResponse doLoginResponse = null;
+
+            while (rsaKey == null || doLoginResponse == null)
+            {
+                try
+                {
+                    rsaKey = GetRsaKey(skadiLoginData.Username);
+                    if (rsaKey == null) continue;
+                    doLoginResponse = DoLogin(rsaKey, skadiLoginData.Username,
+                        skadiLoginData.Password, skadiLoginData.SharedSecret);
+                }
+                catch (Exception)
+                {
+                    Task.Delay(
+                        TimeSpan.FromSeconds(
+                            _skadiConfiguration.WaitTimeEachError)).Wait();
+                }
+            }
+
+            return null;
         }
 
         private GetRsaKeyResponse GetRsaKey(string username)

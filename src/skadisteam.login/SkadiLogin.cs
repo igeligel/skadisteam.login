@@ -14,21 +14,21 @@ namespace skadisteam.login
     public class SkadiLogin
     {
         private RequestFactory _requestFactory;
-        private SkadiConfiguration _skadiConfiguration;
+        private SkadiLoginConfiguration _skadiLoginConfiguration;
 
         public SkadiLogin()
         {
             _requestFactory = new RequestFactory();
         }
 
-        public SkadiLogin(SkadiConfiguration skadiConfiguration)
+        public SkadiLogin(SkadiLoginConfiguration skadiLoginConfiguration)
         {
-            _skadiConfiguration = skadiConfiguration;
+            _skadiLoginConfiguration = skadiLoginConfiguration;
         }
         
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
         {
-            if (!_skadiConfiguration.StopOnError)
+            if (!_skadiLoginConfiguration.StopOnError)
             {
                 ExecuteEndless(skadiLoginData);
             }
@@ -65,7 +65,7 @@ namespace skadisteam.login
                 {
                     Task.Delay(
                         TimeSpan.FromSeconds(
-                            _skadiConfiguration.WaitTimeEachError)).Wait();
+                            _skadiLoginConfiguration.WaitTimeEachError)).Wait();
                 }
             }
 

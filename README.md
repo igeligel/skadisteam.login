@@ -26,7 +26,7 @@ This will not need an api key because it is using the methods which steam is pro
 1. Clone the repo by using git or download it as .zip.
 2. In your new project add the project to the global.json file like this:
 
-  ```
+  ```json
   {
      "projects": [ "src", "test", "../skadisteamlogin/src" ],
      "sdk": {
@@ -35,13 +35,13 @@ This will not need an api key because it is using the methods which steam is pro
   }
   ```
 
-  ```
+  ```json
   "../skadisteamlogin/src"
   ```
   is the path to the project.
 
 3. Add the reference to your project.json like this:
-  ```
+  ```json
   {
     "dependencies": {
       "Microsoft.NETCore.App": {
@@ -69,6 +69,22 @@ After this we need to instantiate the login by:
 ```csharp
 var skadiLogin = new SkadiLogin();
 ```
+
+You can also use skadi configuration for adding extra features.
+```csharp
+SkadiLoginConfiguration skadiLoginConfiguration = new SkadiLoginConfiguration
+{
+    StopOnError = false,
+    WaitTimeEachError = 20
+};
+```
+
+This needs to be appended to the login instance. This is done by:
+
+```csharp
+var skadiLogin = new SkadiLogin(skadiLoginConfiguration);
+```
+
 
 After instantiating you can execute the login by applying the data to a method.
 ```csharp

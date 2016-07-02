@@ -110,7 +110,7 @@ The object will have the following properties:
 
 # How to grab documentation
 
--/-
+> Work in progress
 
 # Contributing
 

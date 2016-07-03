@@ -3,14 +3,6 @@
 A library to login into [steamcommunity.com](http://steamcommunity.com/) via a .net core wrapper.
 This will not need an api key because it is using the methods which steam is providing via the web.
 
-# TODO's
-
-| Issue                                                          | Description                                    |
-| -------------------------------------------------------------- | ---------------------------------------------- |
-| [#1](https://github.com/igeligel/skadisteam.login/issues/1)    | Add time aligner to two factor code generator. |
-| [#2](https://github.com/igeligel/skadisteam.login/issues/2)    | Add continuous integration.                    |
-| [#3](https://github.com/igeligel/skadisteam.login/issues/3)    | Add unit and integration tests.                |
-
 # Dependencies
 
 - "NETStandard.Library": "1.6.0"

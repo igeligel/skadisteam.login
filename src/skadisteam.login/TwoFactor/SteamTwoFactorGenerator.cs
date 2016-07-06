@@ -30,7 +30,7 @@ namespace skadisteam.login.TwoFactor
     /// <summary>
     /// Class to enable two factor authorization for the login process on backpack.tf.
     /// </summary>
-    public class SteamTwoFactorGenerator
+    internal class SteamTwoFactorGenerator
     {
         /// <summary>
         /// String which is the shared secret. This will be provided if you add an authenticator. You will get your shared secret here:
@@ -58,7 +58,7 @@ namespace skadisteam.login.TwoFactor
         /// </example>
         /// You will just need the shared_secret.
         /// </summary>
-        public string SharedSecret;
+        internal string SharedSecret;
         /// <summary>
         /// byte to do the Steam Guard Code translation.
         /// </summary>
@@ -68,7 +68,7 @@ namespace skadisteam.login.TwoFactor
         /// Generate Steam Guard Code for a specific time. Therefore you need the shared secret attacked to an instance of this file.
         /// </summary>
         /// <returns>The string which is five characters long which you need to authenticate on steam.</returns>
-        public string GenerateSteamGuardCodeForTime()
+        internal string GenerateSteamGuardCodeForTime()
         {
             var timestamp = (long)DateTime.Now.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
             if (string.IsNullOrEmpty(SharedSecret))

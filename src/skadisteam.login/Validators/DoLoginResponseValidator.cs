@@ -1,11 +1,10 @@
 using skadisteam.login.Models.Json;
-using skadisteam.login.Models;
 
 namespace skadisteam.login.Validators
 {
-    public static class DoLoginResponseValidator
+    internal static class DoLoginResponseValidator
     {
-        public static bool IsValid(DoLoginResponse doLoginResponse)
+        internal static bool IsValid(DoLoginResponse doLoginResponse)
         {
             if (doLoginResponse.Success && doLoginResponse.LoginComplete)
             {

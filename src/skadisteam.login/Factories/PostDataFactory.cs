@@ -13,7 +13,7 @@ namespace skadisteam.login.Factories
             var content = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>(PostParameters.Username, username),
-                new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixTime().ToString())
+                new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixMilliSecondTime().ToString())
             };
             return content;
         }
@@ -44,7 +44,7 @@ namespace skadisteam.login.Factories
                 new KeyValuePair<string, string>(PostParameters.EmailAuth, ""),
                 new KeyValuePair<string, string>(PostParameters.EmailSteamId, ""),
                 new KeyValuePair<string, string>(PostParameters.RsaTimestamp, Uri.EscapeDataString(rsaTimestamp)),
-                new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixTime().ToString()),
+                new KeyValuePair<string, string>(PostParameters.DoNotCache, DateTime.UtcNow.ToUnixMilliSecondTime().ToString()),
                 new KeyValuePair<string, string>(PostParameters.TwoFactorCode, twoFactorCode)
             };
             return content;

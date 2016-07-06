@@ -1,7 +1,7 @@
 using skadisteam.login.Extensions;
 using Xunit;
 
-namespace skadisteam.login.test.Extensions.Tests
+namespace skadisteam.login.test.Extensions
 {
     public class CharTest
     {

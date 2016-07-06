@@ -3,7 +3,7 @@ using skadisteam.login.Constants;
 using System.Net;
 using Xunit;
 
-namespace skadisteam.login.test.Extensions.Tests
+namespace skadisteam.login.test.Extensions
 {
     public class CookieContainerTest
     {

@@ -3,7 +3,7 @@ using skadisteam.login.Extensions;
 using Xunit;
 using System;
 
-namespace skadisteam.login.test.Extensions.Tests
+namespace skadisteam.login.test.Extensions
 {
     public class StringTest
     {

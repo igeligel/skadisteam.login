@@ -15,8 +15,11 @@ namespace skadisteam.login.Extensions
         /// </returns>
         internal static byte[] HexToByte(this string hex)
         {
-            if (hex.Length % 2 == 1)
+            if (hex.Length%2 == 1)
+            {
                 throw new Exception("The binary key cannot have an odd number of digits");
+            }
+              
 
             var arr = new byte[hex.Length >> 1];
             var l = hex.Length;

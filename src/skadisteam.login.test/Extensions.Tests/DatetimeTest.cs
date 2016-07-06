@@ -2,7 +2,7 @@ using skadisteam.login.Extensions;
 using System;
 using Xunit;
 
-namespace skadisteam.login.test
+namespace skadisteam.login.test.Extensions.Tests
 {
     public class DateTimeTest
     {

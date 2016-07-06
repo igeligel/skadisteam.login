@@ -3,9 +3,9 @@ using skadisteam.login.Models.Json;
 
 namespace skadisteam.login.Factories
 {
-    public static class SkadiLoginErrorFactory
+    internal static class SkadiLoginErrorFactory
     {
-        public static SkadiLoginError Create(DoLoginResponse doLoginResponse)
+        internal static SkadiLoginError Create(DoLoginResponse doLoginResponse)
         {
             SkadiLoginError skadiLoginError = new SkadiLoginError();
             if (doLoginResponse.CaptchaNeeded)

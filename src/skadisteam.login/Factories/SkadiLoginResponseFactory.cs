@@ -8,9 +8,9 @@ using System.Net.Http;
 
 namespace skadisteam.login.Factories
 {
-    public static class SkadiLoginResponseFactory
+    internal static class SkadiLoginResponseFactory
     {
-        public static SkadiLoginResponse Create(HttpResponseMessage response, CookieContainer cookieContainer)
+        internal static SkadiLoginResponse Create(HttpResponseMessage response, CookieContainer cookieContainer)
         {
             SkadiLoginResponse skadiLoginResponse = new SkadiLoginResponse();
             IEnumerable<Cookie> responseCookies = cookieContainer.GetCookies(Uris.SteamCommunitySecureBase).Cast<Cookie>();

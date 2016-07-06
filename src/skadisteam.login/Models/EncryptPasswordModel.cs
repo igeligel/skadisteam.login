@@ -1,9 +1,9 @@
 namespace skadisteam.login.Models
 {
-    public class EncryptPasswordModel
+    internal class EncryptPasswordModel
     {
-        public string Password { get; set; }
-        public string PublicKeyExp { get; set; }
-        public string PublicKeyMod { get; set; }
+        internal string Password { get; set; }
+        internal string PublicKeyExp { get; set; }
+        internal string PublicKeyMod { get; set; }
     }
 }

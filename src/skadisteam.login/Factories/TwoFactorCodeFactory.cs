@@ -2,9 +2,9 @@ using skadisteam.login.TwoFactor;
 
 namespace skadisteam.login.Factories
 {
-    public static class TwoFactorCodeFactory
+    internal static class TwoFactorCodeFactory
     {
-        public static string Create(string sharedSecret)
+        internal static string Create(string sharedSecret)
         {
             var twoFactorGenerator = new SteamTwoFactorGenerator
             {

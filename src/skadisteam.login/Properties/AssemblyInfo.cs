@@ -17,3 +17,5 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("ab8abb0a-c4ae-4b2e-9b5f-14c40a7daa9c")]
+
+[assembly: InternalsVisibleTo("skadisteam.login.test")]

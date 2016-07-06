@@ -7,9 +7,9 @@ using System.Text;
 
 namespace skadisteam.login.Factories
 {
-    public static class EncryptPasswordFactory
+    internal static class EncryptPasswordFactory
     {
-        public static string Create(GetRsaKeyResponse getRsaKeyResponse, string password)
+        internal static string Create(GetRsaKeyResponse getRsaKeyResponse, string password)
         {
             EncryptPasswordModel encryptPasswordModel = new EncryptPasswordModel();
             encryptPasswordModel.PublicKeyExp = getRsaKeyResponse.PublicKeyExp;

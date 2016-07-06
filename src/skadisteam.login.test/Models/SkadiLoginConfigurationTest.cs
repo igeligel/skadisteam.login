@@ -1,14 +1,14 @@
+using skadisteam.login.Models;
 using Xunit;
 
 namespace skadisteam.login.test.Models
 {
-    public class SkadiLoginConfiguration
+    public class SkadiLoginConfigurationTest
     {
         [Fact]
         public void TestDefaultParameters()
         {
-            var skadiLoginConfiguration =
-                new login.Models.SkadiLoginConfiguration();
+            var skadiLoginConfiguration = new SkadiLoginConfiguration();
             Assert.True(skadiLoginConfiguration.StopOnError);
             Assert.Equal(5, skadiLoginConfiguration.WaitTimeEachError);
         }

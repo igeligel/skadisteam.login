@@ -9,16 +9,16 @@ using skadisteam.login.Extensions;
 
 namespace skadisteam.login.Factories
 {
-    public class RequestFactory
+    internal class RequestFactory
     {
         private CookieContainer _cookieContainer;
-        public RequestFactory()
+        internal RequestFactory()
         {
             _cookieContainer = new CookieContainer();
             _cookieContainer.AddEnglishSteamLanguage();
         }
 
-        public HttpResponseMessage Create(HttpMethod method, Uri uri,
+        internal HttpResponseMessage Create(HttpMethod method, Uri uri,
             string path, Accept acceptHeader, string acceptLanguage,
             bool upgradeInsecureRequests, bool steamCommunityOriginSet,
             bool steamCommunityRefererSet, bool isXmlHttpRequest,

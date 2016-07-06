@@ -2,7 +2,7 @@ using System;
 
 namespace skadisteam.login.Extensions
 {
-    public static class StringExtensions
+    internal static class StringExtensions
     {
         /// <summary>
         /// Hex to Byte method.
@@ -13,7 +13,7 @@ namespace skadisteam.login.Extensions
         /// <returns>
         /// Hex Value as Byte[].
         /// </returns>
-        public static byte[] HexToByte(this string hex)
+        internal static byte[] HexToByte(this string hex)
         {
             if (hex.Length % 2 == 1)
                 throw new Exception("The binary key cannot have an odd number of digits");

@@ -1,6 +1,6 @@
 namespace skadisteam.login.Extensions
 {
-    public static class CharExtensions
+    internal static class CharExtensions
     {
         /// <summary>
         /// Get the Hex Value out of char.
@@ -11,7 +11,7 @@ namespace skadisteam.login.Extensions
         /// <returns>
         /// An int.
         /// </returns>
-        public static int GetHexVal(this char hex)
+        internal static int GetHexVal(this char hex)
         {
             var val = (int)hex;
             return val - (val < 58 ? 48 : 55);

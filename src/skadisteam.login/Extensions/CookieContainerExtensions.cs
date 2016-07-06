@@ -6,7 +6,7 @@ namespace skadisteam.login.Extensions
 {
     internal static class CookieContainerExtensions
     {
-        public static void AddEnglishSteamLanguage(this CookieContainer cookieContainer)
+        internal static void AddEnglishSteamLanguage(this CookieContainer cookieContainer)
         {
             var steamCommunityUri = new Uri(Ressources.SteamCommmunitySecureBase);
             cookieContainer.Add(steamCommunityUri, CreateLanguageCookie(steamCommunityUri));

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace skadisteam.login.Factories
 {
-    public static class PostDataFactory
+    internal static class PostDataFactory
     {
         internal static List<KeyValuePair<string, string>> CreateGetRsaKeyData(string username)
         {
@@ -22,10 +22,10 @@ namespace skadisteam.login.Factories
         {
             var content = new List<KeyValuePair<string, string>>
             {
-                new KeyValuePair<string, string>(PostParameters.SteamId, doLoginResponse.TransferParameters.SteamId),
-                new KeyValuePair<string, string>(PostParameters.Token, doLoginResponse.TransferParameters.Token),
                 new KeyValuePair<string, string>(PostParameters.Auth, doLoginResponse.TransferParameters.Auth),
                 new KeyValuePair<string, string>(PostParameters.RememberLogin, doLoginResponse.TransferParameters.RememberLogin.ToString()),
+                new KeyValuePair<string, string>(PostParameters.SteamId, doLoginResponse.TransferParameters.SteamId),
+                new KeyValuePair<string, string>(PostParameters.Token, doLoginResponse.TransferParameters.Token),
                 new KeyValuePair<string, string>(PostParameters.TokenSecure, doLoginResponse.TransferParameters.TokenSecure),
             };
             return content;

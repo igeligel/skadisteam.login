@@ -251,3 +251,4 @@ skadisteam.login.console.sln
 # Ignore stackdumps
 *.stackdump
 
+.idea.skadisteam.login.console/.idea/workspace.xml

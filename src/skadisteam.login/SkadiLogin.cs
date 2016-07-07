@@ -11,25 +11,68 @@ using skadisteam.login.Validators;
 
 namespace skadisteam.login
 {
+    /// <summary>
+    /// Class which has the required methods to make 
+    /// a login into the steamcommunity.
+    /// </summary>
     public class SkadiLogin
     {
         private RequestFactory _requestFactory;
         private SkadiLoginConfiguration _skadiLoginConfiguration;
 
+        /// <summary>
+        /// Standard constructor. When used this the default settings are used.
+        /// These are:
+        /// <list type="table">
+        ///     <listheader>
+        ///         <term>Property</term>
+        ///         <description>Value</description>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>StopOnError</term>
+        ///         <description>true</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>WaitTimeEachError</term>
+        ///         <description>5</description>
+        ///     </item>
+        /// </list>
+        /// For more information lookup: <see cref="SkadiLoginConfiguration"/>.
+        /// </summary>
         public SkadiLogin()
         {
             _requestFactory = new RequestFactory();
         }
 
+        /// <summary>
+        /// Constructor which takes a <see cref="SkadiLoginConfiguration"/>.
+        /// You can edit the default behaviour there.
+        /// </summary>
+        /// <param name="skadiLoginConfiguration">
+        /// Login configuration which should be used. 
+        /// See: <see cref="SkadiLoginConfiguration"/>.
+        /// </param>
         public SkadiLogin(SkadiLoginConfiguration skadiLoginConfiguration)
         {
             _requestFactory = new RequestFactory();
             _skadiLoginConfiguration = skadiLoginConfiguration;
         }
-        
+
+        /// <summary>
+        /// Execute the login. This will take the configuration into consideration
+        /// which can be given as parameter in the constructor.
+        /// </summary>
+        /// <param name="skadiLoginData">
+        /// Date of the steam login. See <see cref="SkadiLoginData"/>.
+        /// </param>
+        /// <returns>
+        /// It will return a response with login data.
+        /// For more information lookup <see cref="SkadiLoginResponse"/>.
+        /// </returns>
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
         {
-            if (_skadiLoginConfiguration != null && !_skadiLoginConfiguration.StopOnError)
+            if (_skadiLoginConfiguration != null &&
+                !_skadiLoginConfiguration.StopOnError)
             {
                 return ExecuteUntilLogin(skadiLoginData);
             }

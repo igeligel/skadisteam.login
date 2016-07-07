@@ -2,19 +2,43 @@ using Newtonsoft.Json;
 
 namespace skadisteam.login.Models.Json
 {
-    public class TransferParameters
+    /// <summary>
+    /// Transfer parameters given by steam.
+    /// This is the transfer route to initialize the 
+    /// cookies and finish the login process.
+    /// </summary>
+    internal class TransferParameters
     {
+        /// <summary>
+        /// Auth value given by steam.
+        /// </summary>
         [JsonProperty(PropertyName = "auth")]
-        public string Auth { get; set; }
+        internal string Auth { get; set; }
+        /// <summary>
+        /// Value given by steam if the server remembers the
+        /// login.
+        /// </summary>
         [JsonProperty(PropertyName = "remember_login")]
-        public bool RememberLogin { get; set; }
+        internal bool RememberLogin { get; set; }
+        /// <summary>
+        /// Steam community id of the account which logged in.
+        /// </summary>
         [JsonProperty(PropertyName = "steamid")]
-        public string SteamId { get; set; }
+        internal string SteamId { get; set; }
+        /// <summary>
+        /// Value of the token sent by Steam.
+        /// </summary>
         [JsonProperty(PropertyName = "token")]
-        public string Token { get; set; }
+        internal string Token { get; set; }
+        /// <summary>
+        /// Token which adds additional security level.
+        /// </summary>
         [JsonProperty(PropertyName = "token_secure")]
-        public string TokenSecure { get; set; }
+        internal string TokenSecure { get; set; }
+        /// <summary>
+        /// WebCookie of Steam.
+        /// </summary>
         [JsonProperty(PropertyName = "webcookie")]
-        public string WebCookie { get; set; }
+        internal string WebCookie { get; set; }
     }
 }

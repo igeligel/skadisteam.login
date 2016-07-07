@@ -1,6 +1,6 @@
 namespace skadisteam.login.Http
 {
-    public enum HttpMethod
+    internal enum HttpMethod
     {
         POST,
         GET

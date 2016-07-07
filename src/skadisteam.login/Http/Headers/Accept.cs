@@ -1,6 +1,6 @@
 namespace skadisteam.login.Http.Headers
 {
-    public enum Accept
+    internal enum Accept
     {
         All,
         Html

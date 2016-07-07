@@ -2,6 +2,9 @@ using System;
 
 namespace skadisteam.login.Extensions
 {
+    /// <summary>
+    /// Class to extend functionality of the normal string methods.
+    /// </summary>
     internal static class StringExtensions
     {
         /// <summary>
@@ -19,7 +22,6 @@ namespace skadisteam.login.Extensions
             {
                 throw new Exception("The binary key cannot have an odd number of digits");
             }
-              
 
             var arr = new byte[hex.Length >> 1];
             var l = hex.Length;

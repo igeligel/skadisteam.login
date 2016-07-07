@@ -1,5 +1,9 @@
 namespace skadisteam.login.Extensions
 {
+    /// <summary>
+    /// Class to extend functionality for character type. 
+    /// We need this for creating special encrypting mechanics.
+    /// </summary>
     internal static class CharExtensions
     {
         /// <summary>

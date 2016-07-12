@@ -48,7 +48,7 @@ namespace skadisteam.login.Factories
 
                 if (steamCommunityOriginSet)
                 {
-                    client.DefaultRequestHeaders.Add(HttpHeaderKeys.Origin, Ressources.SteamCommmunitySecureBase);
+                    client.DefaultRequestHeaders.Add(HttpHeaderKeys.Origin, Resources.SteamCommmunitySecureBase);
                 }
 
                 if (cacheControlSet)

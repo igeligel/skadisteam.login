@@ -19,7 +19,7 @@ namespace skadisteam.login.Extensions
         /// </param>
         internal static void AddEnglishSteamLanguage(this CookieContainer cookieContainer)
         {
-            var steamCommunityUri = new Uri(Ressources.SteamCommmunitySecureBase);
+            var steamCommunityUri = new Uri(Resources.SteamCommmunitySecureBase);
             cookieContainer.Add(steamCommunityUri, CreateLanguageCookie(steamCommunityUri));
         }
 

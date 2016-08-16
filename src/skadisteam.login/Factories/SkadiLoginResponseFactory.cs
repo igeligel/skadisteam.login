@@ -12,9 +12,10 @@ namespace skadisteam.login.Factories
     {
         internal static SkadiLoginResponse Create(HttpResponseMessage response, CookieContainer cookieContainer)
         {
-            SkadiLoginResponse skadiLoginResponse = new SkadiLoginResponse();
+            var skadiLoginResponse = new SkadiLoginResponse();
+            // ReSharper disable once SuggestVarOrType_Elsewhere
             IEnumerable<Cookie> responseCookies = cookieContainer.GetCookies(Uris.SteamCommunitySecureBase).Cast<Cookie>();
-            string responseUri = response.RequestMessage.RequestUri.ToString();
+            var responseUri = response.RequestMessage.RequestUri.ToString();
             var steam64Id = long.Parse(Regex.Split(Regex.Split(responseUri, "http://steamcommunity.com/profiles/")[1], "/home")[0]);
             skadiLoginResponse.SteamCommunityId = steam64Id;
             skadiLoginResponse.SteamCountry = responseCookies.FirstOrDefault(e => e.Name == "steamCountry").Value;
@@ -22,6 +23,14 @@ namespace skadisteam.login.Factories
             skadiLoginResponse.SteamRememberLogin = responseCookies.FirstOrDefault(e => e.Name == "steamRememberLogin").Value;
             skadiLoginResponse.SessionId = responseCookies.FirstOrDefault(e => e.Name == "sessionid").Value;
             skadiLoginResponse.SteamLanguage = responseCookies.FirstOrDefault(e => e.Name == "Steam_Language").Value;
+            skadiLoginResponse.SteamLoginSecure =
+                responseCookies.FirstOrDefault(e => e.Name == "steamLoginSecure")
+                    .Value;
+            var steamMachineAuthCookie =
+                responseCookies.FirstOrDefault(
+                    e => e.Name.Contains("steamMachineAuth"));
+            skadiLoginResponse.SteamMachineAuthvalue =
+                steamMachineAuthCookie.Value;
             skadiLoginResponse.SkadiLoginCookies = cookieContainer;
             return skadiLoginResponse;
         }

@@ -29,6 +29,16 @@ namespace skadisteam.login.Models
         /// </summary>
         public string SteamLanguage { get; set; }
         /// <summary>
+        /// Steam login secure cookie value.
+        /// </summary>
+        public string SteamLoginSecure { get; set; }
+        /// <summary>
+        /// Steam Machine auth value which is provided by steam. The name
+        /// of the cookie will be 'steamMachineAuth' + your steam community
+        /// id.
+        /// </summary>
+        public string SteamMachineAuthvalue { get; set; }
+        /// <summary>
         /// The steam community id of the account which logged in.
         /// </summary>
         public long SteamCommunityId { get; set; }

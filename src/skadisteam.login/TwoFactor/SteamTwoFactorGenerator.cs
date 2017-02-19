@@ -105,7 +105,7 @@ namespace skadisteam.login.TwoFactor
             {
                 return null;
             }
-            return Encoding.UTF8.GetString(codeArray);
+            return Encoding.UTF8.GetString(codeArray).ToLower();
         }
     }
 }

@@ -40,7 +40,7 @@ namespace skadisteam.login.Factories
                 new KeyValuePair<string, string>(PostParameters.CaptchaGid, "-1"),
                 new KeyValuePair<string, string>(PostParameters.CaptchaText, ""),
                 new KeyValuePair<string, string>(PostParameters.RememberLogin, "true"),
-                new KeyValuePair<string, string>(PostParameters.LoginFriendlyName, "skadi-steam-login"),
+                new KeyValuePair<string, string>(PostParameters.LoginFriendlyName, ""),
                 new KeyValuePair<string, string>(PostParameters.EmailAuth, ""),
                 new KeyValuePair<string, string>(PostParameters.EmailSteamId, ""),
                 new KeyValuePair<string, string>(PostParameters.RsaTimestamp, Uri.EscapeDataString(rsaTimestamp)),

@@ -180,8 +180,7 @@ namespace skadisteam.login
             string username, string password, string sharedSecret)
         {
             DoLoginResponse doLoginResponse = null;
-            var encryptedPassword =
-                EncryptPasswordFactory.Create(getRsaKeyResponse, password);
+            var encryptedPassword = EncryptPasswordFactory.Create(getRsaKeyResponse, password);
 
             var content = PostDataFactory.CreateDoLoginData(username,
                 encryptedPassword, getRsaKeyResponse.Timestamp,

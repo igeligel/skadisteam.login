@@ -20,7 +20,11 @@ namespace skadisteam.login.Factories
                 PublicKeyMod = getRsaKeyResponse.PublicKeyMod,
                 Password = password
             };
-            return EncryptPassword(encryptPasswordModel);
+            var encrypted = string.Empty;
+            {
+                encrypted = EncryptPassword(encryptPasswordModel);
+            }
+            return encrypted;
         }
 
         private static string EncryptPassword(EncryptPasswordModel encryptPasswordModel)

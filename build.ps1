@@ -26,8 +26,8 @@ exec { & dotnet restore skadisteam.login.csproj }
 
 cd ..\skadisteam.login.test\
 
-dotnet restore
+dotnet restore skadisteam.login.test.csproj
 
 ls
 
-exec { & dotnet test }
+exec { & dotnet test skadisteam.login.test.csproj }

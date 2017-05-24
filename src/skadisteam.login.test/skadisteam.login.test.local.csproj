@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.0</TargetFramework>
@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\skadisteam.login\skadisteam.login.csproj" />
+    <ProjectReference Include="..\skadisteam.login\skadisteam.login.local.csproj" />
   </ItemGroup>
 
   <ItemGroup>

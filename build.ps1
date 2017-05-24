@@ -22,7 +22,7 @@ function Exec
 
 cd .\src\skadisteam.login\ 
 
-exec { & dotnet restore }
+exec { & dotnet restore skadisteam.login.csproj }
 
 cd ..\skadisteam.login.test\
 

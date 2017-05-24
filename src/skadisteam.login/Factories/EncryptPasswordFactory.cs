@@ -21,6 +21,7 @@ namespace skadisteam.login.Factories
                 Password = password
             };
             var encrypted = string.Empty;
+            while (encrypted.Length < 2 || encrypted.Substring(encrypted.Length - 2) != "==")
             {
                 encrypted = EncryptPassword(encryptPasswordModel);
             }

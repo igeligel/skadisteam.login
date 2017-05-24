@@ -1,6 +1,6 @@
-using System.Net.Http;
 using skadisteam.login.Factories;
 using skadisteam.login.Models.Json;
+using skadisteam.shared.Models;
 using Xunit;
 
 namespace skadisteam.login.test.Factories

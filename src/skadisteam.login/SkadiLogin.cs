@@ -8,6 +8,7 @@ using skadisteam.login.Http;
 using skadisteam.login.Models.Json;
 using skadisteam.login.Factories;
 using skadisteam.login.Validators;
+using skadisteam.shared.Models;
 
 namespace skadisteam.login
 {

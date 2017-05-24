@@ -1,5 +1,5 @@
-using skadisteam.login.Models;
 using skadisteam.login.Models.Json;
+using skadisteam.shared.Models;
 
 namespace skadisteam.login.Factories
 {

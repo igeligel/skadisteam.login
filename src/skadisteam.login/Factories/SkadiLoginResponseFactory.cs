@@ -1,10 +1,10 @@
 using System.Net;
-using skadisteam.login.Models;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using skadisteam.login.Constants;
 using System.Linq;
 using System.Net.Http;
+using skadisteam.shared.Models;
 
 namespace skadisteam.login.Factories
 {

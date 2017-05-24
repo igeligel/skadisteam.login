@@ -6,11 +6,7 @@ namespace skadisteam.login.Validators
     {
         internal static bool IsValid(DoLoginResponse doLoginResponse)
         {
-            if (doLoginResponse.Success && doLoginResponse.LoginComplete)
-            {
-                return true;
-            }
-            return false;
+            return doLoginResponse.Success && doLoginResponse.LoginComplete;
         } 
     }
 }

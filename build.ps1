@@ -1,33 +1,5 @@
 <#
 .SYNOPSIS
-    You can add this to you build script to ensure that psbuild is available before calling
-    Invoke-MSBuild. If psbuild is not available locally it will be downloaded automatically.
-#>
-function EnsurePsbuildInstalled{
-    [cmdletbinding()]
-    param(
-        [string]$psbuildInstallUri = 'https://raw.githubusercontent.com/ligershark/psbuild/master/src/GetPSBuild.ps1'
-    )
-    process{
-        if(-not (Get-Command "Invoke-MsBuild" -errorAction SilentlyContinue)){
-            'Installing psbuild from [{0}]' -f $psbuildInstallUri | Write-Verbose
-            (new-object Net.WebClient).DownloadString($psbuildInstallUri) | iex
-        }
-        else{
-            'psbuild already loaded, skipping download' | Write-Verbose
-        }
-
-        # make sure it's loaded and throw if not
-        if(-not (Get-Command "Invoke-MsBuild" -errorAction SilentlyContinue)){
-            throw ('Unable to install/load psbuild from [{0}]' -f $psbuildInstallUri)
-        }
-    }
-}
-
-# Taken from psake https://github.com/psake/psake
-
-<#
-.SYNOPSIS
   This is a helper function that runs a scriptblock and checks the PS variable $lastexitcode
   to see if an error occcured. If an error is detected then an exception is thrown.
   This function allows you to run command-line programs without having to
@@ -50,18 +22,7 @@ function Exec
 
 cd .\src\skadisteam.login\ 
 
-if(Test-Path .\artifacts) { Remove-Item .\artifacts -Force -Recurse }
-
-EnsurePsbuildInstalled
-
 exec { & dotnet restore }
-
-#Invoke-MSBuild
-Set-MsBuild "C:\Program Files (x86)\MSBuild\14.0\bin\msbuild.exe"
-Invoke-MSBuild
-
-$revision = @{ $true = $env:APPVEYOR_BUILD_NUMBER; $false = 1 }[$env:APPVEYOR_BUILD_NUMBER -ne $NULL];
-$revision = "{0:D4}" -f [convert]::ToInt32($revision, 10)
 
 cd ..\skadisteam.login.test\
 
@@ -69,8 +30,4 @@ dotnet restore
 
 ls
 
-exec { & dotnet test -c release }
-
-cd ..\skadisteam.login\
-
-exec { & dotnet pack -c Release -o .\artifacts }
+exec { & dotnet test }

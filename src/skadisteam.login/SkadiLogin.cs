@@ -6,9 +6,9 @@ using skadisteam.login.Http.Headers;
 using skadisteam.login.Models;
 using skadisteam.login.Models.Json;
 using skadisteam.login.Factories;
+using skadisteam.login.Http;
 using skadisteam.login.Validators;
 using skadisteam.shared.Models;
-using HttpMethod = skadisteam.login.Http.HttpMethod;
 
 namespace skadisteam.login
 {

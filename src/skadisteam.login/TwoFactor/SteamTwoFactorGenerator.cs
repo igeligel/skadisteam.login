@@ -70,7 +70,7 @@ namespace skadisteam.login.TwoFactor
         /// <returns>The string which is five characters long which you need to authenticate on steam.</returns>
         internal string GenerateSteamGuardCodeForTime()
         {
-            var timestamp = (long)DateTime.Now.ToUniversalTime().Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            var timestamp = long.Parse(OffsetGenerator.GetOffset().OffsetParameters.ServerTime);
             if (string.IsNullOrEmpty(SharedSecret))
             {
                 return "";

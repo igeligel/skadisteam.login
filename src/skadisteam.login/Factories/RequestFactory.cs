@@ -86,6 +86,38 @@ namespace skadisteam.login.Factories
             return response;
         }
 
+        internal HttpResponseMessage CreateSession()
+        {
+            var handler =
+                new HttpClientHandler
+                {
+                    CookieContainer = _cookieContainer,
+                    AutomaticDecompression =
+                        DecompressionMethods.GZip | DecompressionMethods.Deflate
+                };
+            var httpClient = new HttpClient(handler);
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Cache-Control", "no-cache");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Pragma", "no-cache");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate, sdch, br");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Language", "en-US,en;q=0.8,de-DE;q=0.6,de;q=0.4,it;q=0.2");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Referer", "http://steamcommunity.com/");
+            return httpClient.GetAsync("https://steamcommunity.com/login/home/?goto=").Result;
+        }
+
+        internal static HttpResponseMessage GetSteamOffset()
+        {
+            var handler =
+                new HttpClientHandler
+                {
+                    AutomaticDecompression =
+                        DecompressionMethods.GZip | DecompressionMethods.Deflate
+                };
+            var httpClient = new HttpClient(handler);
+            return httpClient.PostAsync("http://api.steampowered.com/ITwoFactorService/QueryTime/v1/", null).Result;
+        }
+
         internal CookieContainer GetCookieContainer()
         {
             return _cookieContainer;

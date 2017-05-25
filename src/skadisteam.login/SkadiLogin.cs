@@ -4,11 +4,11 @@ using Newtonsoft.Json;
 using skadisteam.login.Constants;
 using skadisteam.login.Http.Headers;
 using skadisteam.login.Models;
-using skadisteam.login.Http;
 using skadisteam.login.Models.Json;
 using skadisteam.login.Factories;
 using skadisteam.login.Validators;
 using skadisteam.shared.Models;
+using HttpMethod = skadisteam.login.Http.HttpMethod;
 
 namespace skadisteam.login
 {
@@ -72,6 +72,7 @@ namespace skadisteam.login
         /// </returns>
         public SkadiLoginResponse Execute(SkadiLoginData skadiLoginData)
         {
+            GetSession();
             if (_skadiLoginConfiguration != null &&
                 !_skadiLoginConfiguration.StopOnError)
             {
@@ -94,6 +95,7 @@ namespace skadisteam.login
 
         private SkadiLoginResponse ExecuteUntilLogin(SkadiLoginData skadiLoginData)
         {
+            GetSession();
             GetRsaKeyResponse rsaKey = new GetRsaKeyResponse();
             DoLoginResponse doLoginResponse = new DoLoginResponse();
             var doLoginSuccessful = false;
@@ -159,6 +161,11 @@ namespace skadisteam.login
             } while (skadiLoginResponse == null);
             
             return skadiLoginResponse;
+        }
+
+        private void GetSession()
+        {
+            _requestFactory.CreateSession();
         }
 
         private GetRsaKeyResponse GetRsaKey(string username)

@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Net;
 using skadisteam.login.Constants;
 
@@ -19,8 +20,19 @@ namespace skadisteam.login.Extensions
         /// </param>
         internal static void AddEnglishSteamLanguage(this CookieContainer cookieContainer)
         {
-            var steamCommunityUri = new Uri(Resources.SteamCommmunitySecureBase);
-            cookieContainer.Add(steamCommunityUri, CreateLanguageCookie(steamCommunityUri));
+            var steamCommunityUri =
+                new Uri(Resources.SteamCommmunitySecureBase);
+            cookieContainer.Add(steamCommunityUri,
+                CreateLanguageCookie(steamCommunityUri));
+        }
+
+        internal static void AddTimezoneCookie(
+            this CookieContainer cookieContainer)
+        {
+           cookieContainer.Add(new Uri("https://steamcommunity.com"),
+                new Cookie("timezoneoffset",
+                    Math.Abs(DateTimeOffset.Now.Offset.TotalSeconds)
+                        .ToString(CultureInfo.InvariantCulture)));
         }
 
         /// <summary>

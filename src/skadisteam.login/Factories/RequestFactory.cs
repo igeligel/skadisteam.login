@@ -28,6 +28,7 @@ namespace skadisteam.login.Factories
             HttpResponseMessage response = null;
             var handler = new HttpClientHandler();
             handler.CookieContainer = _cookieContainer;
+            handler.CookieContainer.AddTimezoneCookie();
             handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             using (var client = new HttpClient(handler))
             {
